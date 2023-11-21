@@ -1,7 +1,10 @@
 package com.github.makitango.curiocity.event;
 
+import lombok.Builder;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+@Builder
 @Document(collection = "events")
 public record Event(
         String id,
@@ -10,8 +13,8 @@ public record Event(
         int time,
         String link,
         String description,
-        String[] photos,
-        String[] usersWhoUpvoted,
-        String[] usersWhoDownvoted
+        List<String> photos,
+        List<String> usersWhoUpvoted,
+        List<String> usersWhoDownvoted
 ) {
 }
