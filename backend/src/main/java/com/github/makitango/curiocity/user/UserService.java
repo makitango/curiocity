@@ -1,6 +1,7 @@
 package com.github.makitango.curiocity.user;
 
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +22,11 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    public void deleteUser(String id) {
-        userRepository.deleteById(id);
-    }
-
     public User updateUser(User user) {
         return userRepository.save(user);
+    }
+
+    public void deleteUser(String id) {
+        userRepository.deleteById(id);
     }
 }
