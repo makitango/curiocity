@@ -12,8 +12,19 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping
-    public Event addEvent(@RequestBody Event event) {
-        return eventService.addEvent(event);
+    public Event addEvent(@RequestBody DTONewEvent event) {
+        Event entityEvent =
+                Event.builder()
+                        .name(event.name())
+                        .location(event.location())
+                        .time(event.time())
+                        .link(event.link())
+                        .description(event.description())
+                        .photos(event.photos())
+                        .usersWhoUpvoted(event.usersWhoUpvoted())
+                        .usersWhoDownvoted(event.usersWhoDownvoted())
+                        .build();
+        return eventService.addEvent(entityEvent);
     }
 
     @GetMapping
