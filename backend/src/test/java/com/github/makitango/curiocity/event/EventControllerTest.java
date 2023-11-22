@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,8 +28,7 @@ class EventControllerTest {
     @Test
     @DirtiesContext
     void retrievingAllMoviesWhenMoviesExist_ReturnList() throws Exception {
-        Event event1 = Event.builder()
-                .id("1")
+        DTOEvent event1 = DTOEvent.builder()
                 .name("Sample Event 1")
                 .location("City Center")
                 .time(1637550000)
@@ -40,8 +38,7 @@ class EventControllerTest {
                 .usersWhoUpvoted(List.of("user1", "user2", "user3"))
                 .usersWhoDownvoted(List.of("user4"))
                 .build();
-        Event event2 = Event.builder()
-                .id("2")
+        DTOEvent event2 = DTOEvent.builder()
                 .name("Sample Event 2")
                 .location("Park Plaza")
                 .time(1637650000)
@@ -51,7 +48,7 @@ class EventControllerTest {
                 .usersWhoUpvoted(List.of("user1", "user3", "user5"))
                 .usersWhoDownvoted(List.of("user2"))
                 .build();
-        List<Event> expected = List.of(event1, event2);
+        List<DTOEvent> expected = List.of(event1, event2);
 
         mockMvc.perform(post(BASE_URI)
                         .contentType(MediaType.APPLICATION_JSON)
