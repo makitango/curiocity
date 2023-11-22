@@ -9,7 +9,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
 import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,23 +50,27 @@ class EventControllerTest {
                 .usersWhoUpvoted(List.of("user1", "user3", "user5"))
                 .usersWhoDownvoted(List.of("user2"))
                 .build();
-        List<DTOEvent> expected = List.of(event1, event2);
 
-        mockMvc.perform(post(BASE_URI)
+        MvcResult resultEvent1 = mockMvc.perform(post(BASE_URI)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(event1)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andReturn();
+        Event expectedEvent1 = objectMapper.readValue(resultEvent1.getResponse().getContentAsString(), Event.class);
 
-        mockMvc.perform(post(BASE_URI)
+        MvcResult resultEvent2 = mockMvc.perform(post(BASE_URI)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(event2)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andReturn();
+        Event expectedEvent2 = objectMapper.readValue(resultEvent2.getResponse().getContentAsString(), Event.class);
+        List<Event> expected = List.of(expectedEvent1, expectedEvent2);
 
-        MvcResult result = mockMvc.perform(get(BASE_URI))
+        MvcResult listResult = mockMvc.perform(get(BASE_URI))
                 .andExpect(status().isOk())
                 .andReturn();
 
-        String actual = result.getResponse().getContentAsString();
+        String actual = listResult.getResponse().getContentAsString();
         assertEquals(objectMapper.writeValueAsString(expected), actual);
     }
 }
