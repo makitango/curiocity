@@ -29,14 +29,12 @@ class EventControllerTest {
 
     @Test
     @DirtiesContext
-    void retrievingAllMoviesWhenMoviesExist_ReturnList() throws Exception {
+    void givenExistingEvents_whenRetrievingAllEvents_thenListOfEventsIsReturnedSuccessfully() throws Exception {
         DTOEvent event1 = DTOEvent.builder()
                 .name("Sample Event 1")
                 .location("City Center")
                 .time(1637550000)
                 .link("http://example.com/event1")
-                .description("This is a sample event description for Event 1.")
-                .photos(List.of("http://example.com/photo1_1.jpg", "http://example.com/photo1_2.jpg"))
                 .usersWhoUpvoted(List.of("user1", "user2", "user3"))
                 .usersWhoDownvoted(List.of("user4"))
                 .build();
@@ -45,8 +43,6 @@ class EventControllerTest {
                 .location("Park Plaza")
                 .time(1637650000)
                 .link("http://example.com/event2")
-                .description("This is a sample event description for Event 2.")
-                .photos(List.of("http://example.com/photo2_1.jpg", "http://example.com/photo2_2.jpg"))
                 .usersWhoUpvoted(List.of("user1", "user3", "user5"))
                 .usersWhoDownvoted(List.of("user2"))
                 .build();
@@ -64,6 +60,7 @@ class EventControllerTest {
                 .andExpect(status().isOk())
                 .andReturn();
         Event expectedEvent2 = objectMapper.readValue(resultEvent2.getResponse().getContentAsString(), Event.class);
+
         List<Event> expected = List.of(expectedEvent1, expectedEvent2);
 
         MvcResult listResult = mockMvc.perform(get(BASE_URI))

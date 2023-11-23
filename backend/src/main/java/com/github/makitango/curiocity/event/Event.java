@@ -12,8 +12,6 @@ public record Event(
         String location,
         int time,
         String link,
-        String description,
-        List<String> photos,
         List<String> usersWhoUpvoted,
         List<String> usersWhoDownvoted
 ) {
