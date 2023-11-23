@@ -18,7 +18,7 @@ class EventServiceTest {
                 .name("Sample Event 1")
                 .location("City Center")
                 .time(1637550000)
-                .link("http://example.com/event1")
+                .link("https://example.com/event1")
                 .usersWhoUpvoted(List.of("user1", "user2", "user3"))
                 .usersWhoDownvoted(List.of("user4"))
                 .build();
@@ -27,7 +27,7 @@ class EventServiceTest {
                 .name("Sample Event 2")
                 .location("Park Plaza")
                 .time(1637650000)
-                .link("http://example.com/event2")
+                .link("https://example.com/event2")
                 .usersWhoUpvoted(List.of("user1", "user3", "user5"))
                 .usersWhoDownvoted(List.of("user2"))
                 .build();
