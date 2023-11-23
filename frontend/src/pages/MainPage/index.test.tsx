@@ -1,11 +1,29 @@
-import { render, screen } from "@testing-library/react";
-import MainPage from "./index.tsx";
 import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import MainPage from './index.tsx';
 
-
-test("renders a heading", (): void => {
-    render(<MainPage />);
-    const heading = screen.getByRole("heading");
+test("renders a heading", ():void => {
+    render(
+        <BrowserRouter>
+            <MainPage />
+        </BrowserRouter>
+    );
+    const heading = screen.getByRole("heading", {
+        name: /mainpage/i,
+    });
     expect(heading).toBeInTheDocument();
-    expect(heading).toHaveTextContent("MainPage");
+});
+
+
+
+
+test('renders a placeholder message for this yet-to-be-filled site', () => {
+    render(
+        <BrowserRouter>
+            <MainPage />
+        </BrowserRouter>
+    );
+    const message = screen.getByText(/imagine mainpage content/i);
+    expect(message).toBeInTheDocument();
 });
