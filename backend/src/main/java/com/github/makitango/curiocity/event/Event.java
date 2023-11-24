@@ -10,7 +10,8 @@ public record Event(
         String id,
         String name,
         String location,
-        int time,
+        String date,
+        String time,
         String link,
         List<String> usersWhoUpvoted,
         List<String> usersWhoDownvoted

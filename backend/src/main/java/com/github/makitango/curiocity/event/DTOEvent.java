@@ -7,7 +7,8 @@ import java.util.List;
 @Builder
 public record DTOEvent(String name,
                        String location,
-                       int time,
+                       String date,
+                       String time,
                        String link,
                        List<String> usersWhoUpvoted,
                        List<String> usersWhoDownvoted) {

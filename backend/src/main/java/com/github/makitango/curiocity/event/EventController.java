@@ -17,6 +17,7 @@ public class EventController {
                 Event.builder()
                         .name(event.name())
                         .location(event.location())
+                        .date(event.date())
                         .time(event.time())
                         .link(event.link())
                         .usersWhoUpvoted(event.usersWhoUpvoted())
