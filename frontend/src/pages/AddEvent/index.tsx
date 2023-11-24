@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 
-export default function Add() {
+export default function AddEvent() {
     return (
         <>
             <Link to="/">MainPage</Link>
