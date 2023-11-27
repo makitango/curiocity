@@ -24,7 +24,6 @@ export default function MainPage(): JSX.Element {
             <Link to="add">Add Event</Link>
             <h1>MainPage</h1>
             <div>
-                <p>Imagine MainPage content</p>
                 <EventList events={events}/>
             </div>
         </>
