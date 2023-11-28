@@ -30,7 +30,7 @@ class EventControllerTest {
     @Test
     @DirtiesContext
     void givenExistingEvents_whenRetrievingAllEvents_thenListOfEventsIsReturnedSuccessfully() throws Exception {
-        DTOEvent event1 = DTOEvent.builder()
+        EventDTO event1 = EventDTO.builder()
                 .name("Sample Event 1")
                 .location("City Center")
                 .date("1637550000")
@@ -39,7 +39,7 @@ class EventControllerTest {
                 .usersWhoUpvoted(List.of("user1", "user2", "user3"))
                 .usersWhoDownvoted(List.of("user4"))
                 .build();
-        DTOEvent event2 = DTOEvent.builder()
+        EventDTO event2 = EventDTO.builder()
                 .name("Sample Event 2")
                 .location("Park Plaza")
                 .date("1637650000")

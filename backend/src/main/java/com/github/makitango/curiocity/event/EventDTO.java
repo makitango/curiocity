@@ -5,7 +5,7 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
-public record DTOEvent(String name,
+public record EventDTO(String name,
                        String location,
                        String date,
                        String time,

@@ -12,7 +12,7 @@ public class EventController {
     private final EventService eventService;
 
     @PostMapping
-    public Event addEvent(@RequestBody DTOEvent event) {
+    public Event addEvent(@RequestBody EventDTO event) {
         Event entityEvent =
                 Event.builder()
                         .name(event.name())
