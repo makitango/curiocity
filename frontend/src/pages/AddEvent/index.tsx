@@ -59,7 +59,7 @@ export default function AddEvent(): JSX.Element {
             {eventCreated && <p>Event created</p>}
             <form onSubmit={handleSubmit}>
                 <label>
-                    Name:
+                    <span>Name:</span>
                     <input
                         type="text"
                         name="name"
@@ -70,7 +70,7 @@ export default function AddEvent(): JSX.Element {
                 </label>
                 <br/>
                 <label>
-                    Location:
+                    <span>Location:</span>
                     <input
                         type="text"
                         name="location"
@@ -81,7 +81,7 @@ export default function AddEvent(): JSX.Element {
                 </label>
                 <br/>
                 <label>
-                    Date:
+                    <span>Date:</span>
                     <input
                         type="text"
                         name="date"
@@ -92,7 +92,7 @@ export default function AddEvent(): JSX.Element {
                 </label>
                 <br/>
                 <label>
-                    Time:
+                    <span>Time:</span>
                     <input
                         type="text"
                         name="time"
@@ -103,7 +103,7 @@ export default function AddEvent(): JSX.Element {
                 </label>
                 <br/>
                 <label>
-                    Link:
+                    <span>Link:</span>
                     <input
                         type="text"
                         name="link"
