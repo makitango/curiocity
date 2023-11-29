@@ -35,8 +35,6 @@ class EventControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-// EventControllerTest.java
-
     @Test
     @DirtiesContext
     void getAllEvents_whenEventsExist_thenListOfEventsIsReturnedSuccessfully() throws Exception {
