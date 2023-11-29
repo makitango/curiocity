@@ -49,19 +49,7 @@ class EventControllerTest {
                 .usersWhoDownvoted(List.of("user2"))
                 .build();
 
-        MvcResult resultEvent1 = mockMvc.perform(post(BASE_URI)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(event1)))
-                .andExpect(status().isOk())
-                .andReturn();
-        Event expectedEvent1 = objectMapper.readValue(resultEvent1.getResponse().getContentAsString(), Event.class);
-
-        MvcResult resultEvent2 = mockMvc.perform(post(BASE_URI)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(event2)))
-                .andExpect(status().isOk())
-                .andReturn();
-        Event expectedEvent2 = objectMapper.readValue(resultEvent2.getResponse().getContentAsString(), Event.class);
+        
 
         List<Event> expected = List.of(event1, event2);
         String expectedAsJson = objectMapper.writeValueAsString(expected)
