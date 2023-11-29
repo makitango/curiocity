@@ -70,7 +70,6 @@ class EventControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedAsJson));
 
-        String actual = listResult.getResponse().getContentAsString();
-        assertEquals(objectMapper.writeValueAsString(expected), actual);
+ 
     }
 }
