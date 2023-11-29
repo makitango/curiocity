@@ -20,7 +20,7 @@ class EventServiceTest {
                 .location("Winterfell")
                 .date("AC302")
                 .time("9:00 PM")
-                .link("https://example.com/battleofwinterfell")
+                .link("https://gameofthrones.fandom.com/wiki/Battle_of_Winterfell")
                 .usersWhoUpvoted(List.of("Arya Stark", "Jon Snow", "Daenerys Targaryen"))
                 .usersWhoDownvoted(List.of("Night King"))
                 .build();
@@ -31,7 +31,7 @@ class EventServiceTest {
                 .location("King's Landing")
                 .date("AC300")
                 .time("3:00 PM")
-                .link("https://example.com/purplewedding")
+                .link("https://gameofthrones.fandom.com/wiki/Purple_Wedding")
                 .usersWhoUpvoted(List.of("Sansa Stark", "Margaery Tyrell"))
                 .usersWhoDownvoted(List.of("Joffrey Baratheon"))
                 .build();
@@ -55,7 +55,7 @@ class EventServiceTest {
                 .location("Winterfell")
                 .date("AC300")
                 .time("2:30 PM")
-                .link("https://example.com/battleofthebastards")
+                .link("https://gameofthrones.fandom.com/wiki/Battle_of_the_Bastards")
                 .usersWhoUpvoted(List.of("Jon Snow", "Sansa Stark"))
                 .usersWhoDownvoted(List.of("Ramsay Bolton"))
                 .build();
@@ -66,7 +66,7 @@ class EventServiceTest {
                 .location("Winterfell")
                 .date("AC300")
                 .time("2:30 PM")
-                .link("https://example.com/battleofthebastards")
+                .link("https://gameofthrones.fandom.com/wiki/Battle_of_the_Bastards")
                 .usersWhoUpvoted(List.of("Jon Snow", "Sansa Stark"))
                 .usersWhoDownvoted(List.of("Ramsay Bolton"))
                 .build();
@@ -82,7 +82,7 @@ class EventServiceTest {
         assertEquals("Winterfell", addedEvent.location());
         assertEquals("AC300", addedEvent.date());
         assertEquals("2:30 PM", addedEvent.time());
-        assertEquals("https://example.com/battleofthebastards", addedEvent.link());
+        assertEquals("https://gameofthrones.fandom.com/wiki/Battle_of_the_Bastards", addedEvent.link());
         assertEquals(List.of("Jon Snow", "Sansa Stark"), addedEvent.usersWhoUpvoted());
         assertEquals(List.of("Ramsay Bolton"), addedEvent.usersWhoDownvoted());
     }

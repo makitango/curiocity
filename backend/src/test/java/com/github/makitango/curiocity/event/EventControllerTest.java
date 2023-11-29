@@ -1,33 +1,27 @@
 package com.github.makitango.curiocity.event;
 
-import org.junit.jupiter.api.Test;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.http.MediaType;
 
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import org.springframework.test.web.servlet.MvcResult;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.springframework.http.MediaType;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class EventControllerTest {
 
-    private final static String BASE_URI = "/api/events";
+    private static final String BASE_URI = "/api/events";
     @Autowired
     private EventRepository eventRepository;
     @Autowired
@@ -44,7 +38,7 @@ class EventControllerTest {
                 .location("Westeros")
                 .date("BC1000")
                 .time("5:00 PM")
-                .link("https://example.com/redwedding")
+                .link("https://gameofthrones.fandom.com/wiki/Red_Wedding")
                 .usersWhoUpvoted(List.of("Robb Stark", "Catelyn Stark"))
                 .usersWhoDownvoted(List.of("Walder Frey"))
                 .build();
@@ -54,7 +48,7 @@ class EventControllerTest {
                 .location("Winterfell")
                 .date("AC300")
                 .time("2:30 PM")
-                .link("https://example.com/battleofthebastards")
+                .link("https://gameofthrones.fandom.com/wiki/Battle_of_the_Bastards")
                 .usersWhoUpvoted(List.of("Jon Snow", "Sansa Stark"))
                 .usersWhoDownvoted(List.of("Ramsay Bolton"))
                 .build();
@@ -81,7 +75,7 @@ class EventControllerTest {
                 .location("King's Landing")
                 .date("AC299")
                 .time("8:00 PM")
-                .link("https://example.com/battleofblackwater")
+                .link("https://gameofthrones.fandom.com/wiki/Battle_of_the_Blackwater")
                 .usersWhoUpvoted(List.of("Tyrion Lannister", "Davos Seaworth"))
                 .usersWhoDownvoted(List.of("Stannis Baratheon"))
                 .build();
@@ -97,11 +91,11 @@ class EventControllerTest {
 
         // THEN
         assertNotNull(addedEvent);
-        assertEquals("King's Landing", addedEvent.location());
         assertEquals("Battle of Blackwater", addedEvent.name());
+        assertEquals("King's Landing", addedEvent.location());
         assertEquals("AC299", addedEvent.date());
         assertEquals("8:00 PM", addedEvent.time());
-        assertEquals("https://example.com/battleofblackwater", addedEvent.link());
+        assertEquals("https://gameofthrones.fandom.com/wiki/Battle_of_the_Blackwater", addedEvent.link());
         assertEquals(List.of("Tyrion Lannister", "Davos Seaworth"), addedEvent.usersWhoUpvoted());
         assertEquals(List.of("Stannis Baratheon"), addedEvent.usersWhoDownvoted());
     }
