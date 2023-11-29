@@ -21,7 +21,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class EventControllerTest {
 
     private final static String BASE_URI = "/api/events";
-
+@Autowired
+private EventRepository eventRepository;
     @Autowired
     private MockMvc mockMvc;
     @Autowired
