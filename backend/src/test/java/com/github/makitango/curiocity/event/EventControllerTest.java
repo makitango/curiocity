@@ -5,24 +5,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 class EventControllerTest {
 
     private final static String BASE_URI = "/api/events";
-@Autowired
-private EventRepository eventRepository;
+    @Autowired
+    private EventRepository eventRepository;
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -49,19 +49,14 @@ private EventRepository eventRepository;
                 .usersWhoUpvoted(List.of("user1", "user3", "user5"))
                 .usersWhoDownvoted(List.of("user2"))
                 .build();
-         eventRepository.save(event1);    
-         eventRepository.save(event2);    
-              
-
-        
+        eventRepository.save(event1);
+        eventRepository.save(event2);
 
         List<Event> expected = List.of(event1, event2);
-        String expectedAsJson = objectMapper.writeValueAsString(expected)
+        String expectedAsJson = objectMapper.writeValueAsString(expected);
 
         mockMvc.perform(get(BASE_URI))
                 .andExpect(status().isOk())
                 .andExpect(content().json(expectedAsJson));
-
- 
     }
 }
