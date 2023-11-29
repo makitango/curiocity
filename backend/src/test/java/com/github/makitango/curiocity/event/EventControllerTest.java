@@ -29,7 +29,7 @@ class EventControllerTest {
 
     @Test
     @DirtiesContext
-    void givenExistingEvents_whenRetrievingAllEvents_thenListOfEventsIsReturnedSuccessfully() throws Exception {
+    void getAllEvents_whenEventsExist_thenListOfEventsIsReturnedSuccessfully() throws Exception {
         EventDTO event1 = EventDTO.builder()
                 .name("Sample Event 1")
                 .location("City Center")
