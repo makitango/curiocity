@@ -31,7 +31,7 @@ private EventRepository eventRepository;
     @Test
     @DirtiesContext
     void getAllEvents_whenEventsExist_thenListOfEventsIsReturnedSuccessfully() throws Exception {
-        EventDTO event1 = EventDTO.builder()
+        Event event1 = Event.builder().id("1")
                 .name("Sample Event 1")
                 .location("City Center")
                 .date("1637550000")
@@ -40,7 +40,7 @@ private EventRepository eventRepository;
                 .usersWhoUpvoted(List.of("user1", "user2", "user3"))
                 .usersWhoDownvoted(List.of("user4"))
                 .build();
-        EventDTO event2 = EventDTO.builder()
+        Event event2 = Event.builder().id("2")
                 .name("Sample Event 2")
                 .location("Park Plaza")
                 .date("1637650000")
@@ -49,6 +49,9 @@ private EventRepository eventRepository;
                 .usersWhoUpvoted(List.of("user1", "user3", "user5"))
                 .usersWhoDownvoted(List.of("user2"))
                 .build();
+         eventRepository.save(event1);    
+         eventRepository.save(event2);    
+              
 
         
 
