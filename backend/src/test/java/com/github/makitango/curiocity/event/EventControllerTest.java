@@ -63,11 +63,12 @@ class EventControllerTest {
                 .andReturn();
         Event expectedEvent2 = objectMapper.readValue(resultEvent2.getResponse().getContentAsString(), Event.class);
 
-        List<Event> expected = List.of(expectedEvent1, expectedEvent2);
+        List<Event> expected = List.of(event1, event2);
+        String expectedAsJson = objectMapper.writeValueAsString(expected)
 
-        MvcResult listResult = mockMvc.perform(get(BASE_URI))
+        mockMvc.perform(get(BASE_URI))
                 .andExpect(status().isOk())
-                .andReturn();
+                .andExpect(content().json(expectedAsJson));
 
         String actual = listResult.getResponse().getContentAsString();
         assertEquals(objectMapper.writeValueAsString(expected), actual);
