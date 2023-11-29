@@ -91,12 +91,13 @@ class EventControllerTest {
 
         // THEN
         assertNotNull(addedEvent);
-        assertEquals("Battle of Blackwater", addedEvent.name());
-        assertEquals("King's Landing", addedEvent.location());
-        assertEquals("AC299", addedEvent.date());
-        assertEquals("8:00 PM", addedEvent.time());
-        assertEquals("https://gameofthrones.fandom.com/wiki/Battle_of_the_Blackwater", addedEvent.link());
-        assertEquals(List.of("Tyrion Lannister", "Davos Seaworth"), addedEvent.usersWhoUpvoted());
-        assertEquals(List.of("Stannis Baratheon"), addedEvent.usersWhoDownvoted());
+        assertEquals(newEventDTO.name(), addedEvent.name());
+        assertEquals(newEventDTO.location(), addedEvent.location());
+        assertEquals(newEventDTO.date(), addedEvent.date());
+        assertEquals(newEventDTO.time(), addedEvent.time());
+        assertEquals(newEventDTO.link(), addedEvent.link());
+        assertEquals(newEventDTO.usersWhoUpvoted(), addedEvent.usersWhoUpvoted());
+        assertEquals(newEventDTO.usersWhoDownvoted(), addedEvent.usersWhoDownvoted());
     }
+
 }
