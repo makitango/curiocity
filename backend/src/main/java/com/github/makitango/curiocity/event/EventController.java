@@ -1,17 +1,15 @@
 package com.github.makitango.curiocity.event;
 
-import java.util.List;
-
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/events")
+@AllArgsConstructor
 public class EventController {
     private final EventService eventService;
-
-    public EventController(EventService eventService) {
-        this.eventService = eventService;
-    }
 
     @PostMapping
     public Event addEvent(@RequestBody EventDTO eventDTO) {
