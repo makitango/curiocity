@@ -1,7 +1,7 @@
-import {EventType, EventListType} from "../../resources/types.tsx";
+import { Link } from "react-router-dom";
+import { EventType, EventListType } from "../../resources/types.tsx";
 
-export default function EventList({events}: Readonly<EventListType>) {
-
+export default function EventList({ events }: Readonly<EventListType>) {
     return (
         <div>
             {!events ? (
@@ -9,7 +9,7 @@ export default function EventList({events}: Readonly<EventListType>) {
             ) : (
                 <ul>
                     <h2>Event List</h2>
-                    {events.map((event:EventType) => (
+                    {events.map((event: EventType) => (
                         <li key={event.id}>
                             <h3>Title: {event.name}</h3>
                             <p>Location: {event.location}</p>
@@ -18,6 +18,7 @@ export default function EventList({events}: Readonly<EventListType>) {
                             <p>Link: {event.link}</p>
                             <p>Upvotes: {event.usersWhoUpvoted.length}</p>
                             <p>Downvotes: {event.usersWhoDownvoted.length}</p>
+                            <Link to={`/update/${event.id}`}>Update Event</Link>
                         </li>
                     ))}
                 </ul>
