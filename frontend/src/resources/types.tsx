@@ -1,3 +1,5 @@
+import {ChangeEvent} from "react";
+
 export type EventType = {
     id: string;
     name: string;
@@ -24,4 +26,13 @@ export type AddEventType = {
 export type UpdateEventType = AddEventType & {
     usersWhoUpvoted: string[];
     usersWhoDownvoted: string[];
+};
+
+export type EventFormInputType = {
+    label: string;
+    name: string;
+    value: string;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    required?: boolean;
+    type?: string;
 };

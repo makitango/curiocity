@@ -1,17 +1,18 @@
-import { useState, ChangeEvent, FormEvent, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
-import axios from "axios";
-import { UpdateEventType } from "../../resources/types.tsx";
+import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { UpdateEventType } from '../../resources/types.tsx';
+import EventFormInput from '../../components/EventFormInput';
 
 export default function UpdateEvent(): JSX.Element {
     const { eventId } = useParams<{ eventId: string }>();
 
     const initialFormData: UpdateEventType = {
-        name: "",
-        location: "",
-        date: "",
-        time: "",
-        link: "",
+        name: '',
+        location: '',
+        date: '',
+        time: '',
+        link: '',
         usersWhoUpvoted: [],
         usersWhoDownvoted: [],
     };
@@ -27,7 +28,7 @@ export default function UpdateEvent(): JSX.Element {
                 setFormData(eventToUpdate);
             })
             .catch((error): void => {
-                console.error("Error fetching event details:", error);
+                console.error('Error fetching event details:', error);
             });
     }, [eventId]);
 
@@ -45,11 +46,11 @@ export default function UpdateEvent(): JSX.Element {
         axios
             .put(`/api/events/${eventId}`, formData)
             .then((response): void => {
-                console.log("Event updated successfully:", response.data);
+                console.log('Event updated successfully:', response.data);
                 setEventUpdated(true);
             })
             .catch((error): void => {
-                console.error("Error updating event:", error);
+                console.error('Error updating event:', error);
             });
     };
 
@@ -70,61 +71,11 @@ export default function UpdateEvent(): JSX.Element {
             <Link to="/">MainPage</Link>
             <h1>Update Event</h1>
             <form onSubmit={handleSubmit}>
-                <label>
-                    <span>Name:</span>
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <br />
-                <label>
-                    <span>Location:</span>
-                    <input
-                        type="text"
-                        name="location"
-                        value={formData.location}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <br />
-                <label>
-                    <span>Date:</span>
-                    <input
-                        type="text"
-                        name="date"
-                        value={formData.date}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <br />
-                <label>
-                    <span>Time:</span>
-                    <input
-                        type="text"
-                        name="time"
-                        value={formData.time}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <br />
-                <label>
-                    <span>Link:</span>
-                    <input
-                        type="text"
-                        name="link"
-                        value={formData.link}
-                        onChange={handleChange}
-                        required
-                    />
-                </label>
-                <br />
+                <EventFormInput label="Name" name="name" value={formData.name} onChange={handleChange} required />
+                <EventFormInput label="Location" name="location" value={formData.location} onChange={handleChange} required />
+                <EventFormInput label="Date" name="date" value={formData.date} onChange={handleChange} required />
+                <EventFormInput label="Time" name="time" value={formData.time} onChange={handleChange} required />
+                <EventFormInput label="Link" name="link" value={formData.link} onChange={handleChange} required />
                 <p>Upvotes: {formData.usersWhoUpvoted.length}</p>
                 <p>Downvotes: {formData.usersWhoDownvoted.length}</p>
                 {eventUpdated && <p>Event updated</p>}

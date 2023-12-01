@@ -2,6 +2,7 @@ import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import axios from 'axios';
 import { AddEventType } from '../../resources/types.tsx';
 import { Link } from 'react-router-dom';
+import EventFormInput from '../../components/EventFormInput';
 
 export default function AddEvent(): JSX.Element {
     const initialFormData: AddEventType = {
@@ -17,7 +18,7 @@ export default function AddEvent(): JSX.Element {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
+        setFormData((prevData:AddEventType) => ({
             ...prevData,
             [name]: value,
         }));
@@ -28,12 +29,12 @@ export default function AddEvent(): JSX.Element {
 
         axios
             .post('/api/events', formData)
-            .then((response) => {
+            .then((response): void => {
                 console.log('Event added successfully:', response.data);
                 setEventCreated(true);
                 setFormData(initialFormData);
             })
-            .catch((error) => {
+            .catch((error): void => {
                 console.error('Error adding event:', error);
             });
     };
@@ -42,7 +43,7 @@ export default function AddEvent(): JSX.Element {
         let timer: ReturnType<typeof setTimeout>;
 
         if (eventCreated) {
-            timer = setTimeout(() => {
+            timer = setTimeout((): void => {
                 setEventCreated(false);
             }, 5000);
         }
@@ -55,24 +56,11 @@ export default function AddEvent(): JSX.Element {
             <Link to="/">MainPage</Link>
             <h1>Add Event</h1>
             <form onSubmit={handleSubmit}>
-                {Object.entries(initialFormData).map(([key]) => {
-                    const inputKey = key as keyof AddEventType; // Explicitly cast key to keyof AddEventType
-                    return (
-                        <div key={key}>
-                            <label>
-                                <span>{key.charAt(0).toUpperCase() + key.slice(1)}:</span>
-                                <input
-                                    type="text"
-                                    name={key}
-                                    value={formData[inputKey]}
-                                    onChange={handleChange}
-                                    required
-                                />
-                            </label>
-                            <br />
-                        </div>
-                    );
-                })}
+                <EventFormInput label="Name" name="name" value={formData.name} onChange={handleChange} required />
+                <EventFormInput label="Location" name="location" value={formData.location} onChange={handleChange} required />
+                <EventFormInput label="Date" name="date" value={formData.date} onChange={handleChange} required />
+                <EventFormInput label="Time" name="time" value={formData.time} onChange={handleChange} required />
+                <EventFormInput label="Link" name="link" value={formData.link} onChange={handleChange} required />
                 {eventCreated && <p>Event created</p>}
                 <button type="submit">Add Event</button>
             </form>
