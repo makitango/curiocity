@@ -12,8 +12,6 @@ export default function UpdateEvent(): JSX.Element {
         date: "",
         time: "",
         link: "",
-        usersWhoUpvoted: [],
-        usersWhoDownvoted: [],
     };
 
     const [formData, setFormData] = useState<UpdateEventType>(initialFormData);
