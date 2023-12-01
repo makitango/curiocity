@@ -31,18 +31,6 @@ export default function UpdateEvent(): JSX.Element {
             });
     }, [eventId]);
 
-    useEffect((): void => {
-        axios
-            .get(`/api/events/${eventId}/details`)
-            .then((response): void => {
-                const eventDetailsFromServer: UpdateEventType = response.data;
-                setFormData(eventDetailsFromServer);
-            })
-            .catch((error): void => {
-                console.error("Error fetching event details:", error);
-            });
-    }, [eventId]);
-
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target;
         setFormData((prevData: UpdateEventType) => ({
