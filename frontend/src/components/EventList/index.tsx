@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import { EventType, EventListType } from "../../resources/types.tsx";
+import { Link } from 'react-router-dom';
+import { EventType, EventListType } from '../../resources/types.tsx';
 
-export default function EventList({ events }: Readonly<EventListType>) {
+export default function EventList({ events }: Readonly<EventListType>): JSX.Element {
     return (
         <div>
             {!events ? (

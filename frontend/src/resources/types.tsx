@@ -19,14 +19,9 @@ export type AddEventType = {
     date: string;
     time: string;
     link: string;
-}
+};
 
-export type UpdateEventType = {
-    name: string;
-    location: string;
-    date: string;
-    time: string;
-    link: string;
+export type UpdateEventType = AddEventType & {
     usersWhoUpvoted: string[];
     usersWhoDownvoted: string[];
-}
+};
