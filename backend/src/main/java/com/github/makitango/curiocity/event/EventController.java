@@ -20,4 +20,14 @@ public class EventController {
     public List<Event> getAllEvents() {
         return eventService.getAllEvents();
     }
+
+    @GetMapping("/{id}")
+    public Event getEventById(@PathVariable String id) {
+        return eventService.getEventById(id);
+    }
+
+    @PutMapping("/{id}")
+    public Event updateEvent(@PathVariable String id, @RequestBody EventDTO eventDTO) {
+        return eventService.updateEvent(id, eventDTO);
+    }
 }
