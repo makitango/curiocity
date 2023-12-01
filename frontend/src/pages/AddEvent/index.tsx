@@ -10,12 +10,10 @@ export default function AddEvent(): JSX.Element {
         date: "",
         time: "",
         link: "",
-        usersWhoUpvoted: [],
-        usersWhoDownvoted: [],
     };
 
     const [formData, setFormData] = useState<AddEventType>(initialFormData);
-    const [eventCreated, setEventCreated] = useState(false);
+    const [eventCreated, setEventCreated] = useState<boolean>(false);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const {name, value} = e.target;
@@ -41,22 +39,22 @@ export default function AddEvent(): JSX.Element {
     };
 
     useEffect(() => {
-        let timer: NodeJS.Timeout;
+        let timer: ReturnType<typeof setTimeout>;
 
         if (eventCreated) {
-            timer = setTimeout(() => {
+            timer = setTimeout((): void => {
                 setEventCreated(false);
-            }, 5000); // 5000 milliseconds = 5 seconds
+            }, 5000);
         }
 
         return () => clearTimeout(timer);
     }, [eventCreated]);
 
+
     return (
         <>
             <Link to="/">MainPage</Link>
             <h1>Add Event</h1>
-            {eventCreated && <p>Event created</p>}
             <form onSubmit={handleSubmit}>
                 <label>
                     <span>Name:</span>
@@ -113,8 +111,10 @@ export default function AddEvent(): JSX.Element {
                     />
                 </label>
                 <br/>
+                {eventCreated && <p>Event created</p>}
                 <button type="submit">Add Event</button>
             </form>
+
         </>
     );
 }
