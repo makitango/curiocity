@@ -12,18 +12,31 @@ export default function UpdateEvent(): JSX.Element {
         date: "",
         time: "",
         link: "",
+        usersWhoUpvoted: [],
+        usersWhoDownvoted: [],
     };
 
     const [formData, setFormData] = useState<UpdateEventType>(initialFormData);
     const [eventUpdated, setEventUpdated] = useState<boolean>(false);
 
-    // Fetch event details on component mount
     useEffect((): void => {
         axios
             .get(`/api/events/${eventId}`)
             .then((response): void => {
-                const eventToUpdate:UpdateEventType = response.data as UpdateEventType;
+                const eventToUpdate: UpdateEventType = response.data as UpdateEventType;
                 setFormData(eventToUpdate);
+            })
+            .catch((error): void => {
+                console.error("Error fetching event details:", error);
+            });
+    }, [eventId]);
+
+    useEffect((): void => {
+        axios
+            .get(`/api/events/${eventId}/details`)
+            .then((response): void => {
+                const eventDetailsFromServer: UpdateEventType = response.data;
+                setFormData(eventDetailsFromServer);
             })
             .catch((error): void => {
                 console.error("Error fetching event details:", error);
@@ -32,7 +45,7 @@ export default function UpdateEvent(): JSX.Element {
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
         const { name, value } = e.target;
-        setFormData((prevData:UpdateEventType) => ({
+        setFormData((prevData: UpdateEventType) => ({
             ...prevData,
             [name]: value,
         }));
@@ -64,68 +77,69 @@ export default function UpdateEvent(): JSX.Element {
         return () => clearTimeout(timer);
     }, [eventUpdated]);
 
-
     return (
         <>
             <Link to="/">MainPage</Link>
             <h1>Update Event</h1>
-             <form onSubmit={handleSubmit}>
-                    <label>
-                        <span>Name:</span>
-                        <input
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        <span>Location:</span>
-                        <input
-                            type="text"
-                            name="location"
-                            value={formData.location}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        <span>Date:</span>
-                        <input
-                            type="text"
-                            name="date"
-                            value={formData.date}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        <span>Time:</span>
-                        <input
-                            type="text"
-                            name="time"
-                            value={formData.time}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                    <br />
-                    <label>
-                        <span>Link:</span>
-                        <input
-                            type="text"
-                            name="link"
-                            value={formData.link}
-                            onChange={handleChange}
-                            required
-                        />
-                    </label>
-                    <br />
-                 {eventUpdated && <p>Event updated</p>}
+            <form onSubmit={handleSubmit}>
+                <label>
+                    <span>Name:</span>
+                    <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <br />
+                <label>
+                    <span>Location:</span>
+                    <input
+                        type="text"
+                        name="location"
+                        value={formData.location}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <br />
+                <label>
+                    <span>Date:</span>
+                    <input
+                        type="text"
+                        name="date"
+                        value={formData.date}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <br />
+                <label>
+                    <span>Time:</span>
+                    <input
+                        type="text"
+                        name="time"
+                        value={formData.time}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <br />
+                <label>
+                    <span>Link:</span>
+                    <input
+                        type="text"
+                        name="link"
+                        value={formData.link}
+                        onChange={handleChange}
+                        required
+                    />
+                </label>
+                <br />
+                <p>Upvotes: {formData.usersWhoUpvoted.length}</p>
+                <p>Downvotes: {formData.usersWhoDownvoted.length}</p>
+                {eventUpdated && <p>Event updated</p>}
                 <button type="submit">Update Event</button>
             </form>
         </>
