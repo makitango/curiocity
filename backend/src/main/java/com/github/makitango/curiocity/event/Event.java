@@ -4,6 +4,7 @@ import lombok.Builder;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
+
 @Builder
 @Document(collection = "events")
 public record Event(
