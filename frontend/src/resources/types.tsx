@@ -1,4 +1,4 @@
-import {ChangeEvent} from "react";
+import { ChangeEvent } from 'react';
 
 export type EventType = {
     id: string;
@@ -35,4 +35,20 @@ export type EventFormInputType = {
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     required?: boolean;
     type?: string;
+    placeholder?: string;
+};
+
+export type EventFormProps = {
+    formData: {
+        name: string;
+        location: string;
+        date: string;
+        time: string;
+        link: string;
+        usersWhoUpvoted?: string[];
+        usersWhoDownvoted?: string[];
+    };
+    handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    handleSubmit: () => Promise<void>;
+    handleDelete?: () => void;
 };
