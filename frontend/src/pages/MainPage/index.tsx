@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import EventList from '../../components/EventList';
 import { EventType } from '../../resources/types.tsx';
-import {Link} from "react-router-dom";
 
-export default function MainPage(): JSX.Element {
+export default function MainPage() {
     const [events, setEvents] = useState<EventType[]>([]);
 
     useEffect(() => {
@@ -20,8 +19,6 @@ export default function MainPage(): JSX.Element {
 
     return (
         <>
-            <Link to="add">Add Event</Link>
-            <h1>MainPage</h1>
             <div>
                 <EventList events={events} />
             </div>
