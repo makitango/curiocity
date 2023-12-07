@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class EventServiceTest {
@@ -159,5 +158,44 @@ class EventServiceTest {
 
         assertNotNull(actualUpdatedEvent);
         assertEquals(expectedUpdatedEvent, actualUpdatedEvent);
+    }
+
+    @Test
+    void deleteEvent_shouldDeleteEventSuccessfully() {
+        // GIVEN
+        String eventId = "1";
+        Event existingEvent = Event.builder()
+                .id(eventId)
+                .name("Red Wedding")
+                .location("Westeros")
+                .date("BC1000")
+                .time("5:00 PM")
+                .link("https://gameofthrones.fandom.com/wiki/Red_Wedding")
+                .usersWhoUpvoted(List.of("Robb Stark", "Catelyn Stark"))
+                .usersWhoDownvoted(List.of("Walder Frey"))
+                .build();
+
+        when(mockEventRepository.findById(eventId)).thenReturn(Optional.of(existingEvent));
+
+        // WHEN
+        eventService.deleteEvent(eventId);
+
+        // THEN
+        verify(mockEventRepository).deleteById(eventId);
+    }
+
+
+    @Test
+    void deleteEvent_shouldThrowExceptionIfEventNotFound() {
+        // GIVEN
+        String nonExistingEventId = "non-existing-id";
+
+        // WHEN
+        try {
+            eventService.deleteEvent(nonExistingEventId);
+        } catch (RuntimeException e) {
+            // THEN
+            assertEquals("Event not found", e.getMessage());
+        }
     }
 }
