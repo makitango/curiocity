@@ -105,7 +105,7 @@ export default function EventForm({
                     <button
                         type="button"
                         onClick={handleDeleteButton}
-                        className={`delete-event-button ${deleteButtonState !== 'idle' ? 'disabled' : ''} ${
+                        className={`secondary ${deleteButtonState !== 'idle' ? 'disabled' : ''} ${
                             deleteButtonState === 'deleting' ? 'deleting' : deleteButtonState === 'deleted' ? 'deleted' : ''
                         }`}
                         style={{width: '100%'}}

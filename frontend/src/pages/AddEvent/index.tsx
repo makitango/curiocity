@@ -1,7 +1,8 @@
-import {ChangeEvent, FormEvent, useState} from 'react';
+import { FormEvent } from 'react';
 import axios from 'axios';
 import EventForm from '../../components/EventForm';
 import './index.css';
+import {useForm} from "../../resources/formUtils.ts";
 
 export default function AddEvent(): JSX.Element {
     const initialFormData = {
@@ -14,16 +15,7 @@ export default function AddEvent(): JSX.Element {
         usersWhoDownvoted: [],
     };
 
-    const [formData, setFormData] = useState(initialFormData);
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-        const {name, value} = e.target;
-        setFormData((prevData) => ({...prevData, [name]: value}));
-    };
-
-    const isValid: boolean = Object.values(formData).every(
-        (value) => typeof value === 'string' && value.trim() !== '' && value.length >= 3
-    );
+    const { formData, handleChange, isValid, resetForm } = useForm(initialFormData);
 
     const handleSubmit = (e: FormEvent): void => {
         e.preventDefault();
@@ -32,15 +24,12 @@ export default function AddEvent(): JSX.Element {
             .post('/api/events', formData)
             .then((response) => {
                 console.log('Event added successfully:', response.data);
-                setFormData(initialFormData);
+                resetForm();
             })
             .catch((error) => {
                 console.error('Error adding event:', error);
             });
     };
 
-    return (
-                <EventForm formData={formData} isValid={isValid}
-                           handleSubmit={handleSubmit} onChange={handleChange}/>
-    );
+    return <EventForm formData={formData} isValid={isValid} handleSubmit={handleSubmit} onChange={handleChange} />;
 }
