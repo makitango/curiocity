@@ -8,7 +8,7 @@ export default function EventForm({
                                       onChange,
                                       handleSubmit,
                                       handleDelete,
-                                  }: EventFormType): JSX.Element {
+                                  }: Readonly<EventFormType>): JSX.Element {
     const [isInvalid, setIsInvalid] = useState<boolean>(false);
     const [saveButtonState, setSaveButtonState] = useState<SaveButtonStateType>('idle');
     const [deleteButtonState, setDeleteButtonState] = useState<DeleteButtonStateType>('idle');
