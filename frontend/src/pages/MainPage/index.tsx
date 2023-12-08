@@ -1,26 +1,10 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import EventList from '../../components/EventList';
-import { EventType } from '../../resources/types.tsx';
+import EventList from "../../components/EventList";
 
-export default function MainPage() {
-    const [events, setEvents] = useState<EventType[]>([]);
-
-    useEffect(() => {
-        axios
-            .get('/api/events')
-            .then((response) => {
-                setEvents(response.data as EventType[]);
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-    }, []);
-
+export default function MainPage(): JSX.Element {
     return (
         <>
             <div>
-                <EventList events={events} />
+                <EventList/>
             </div>
         </>
     );
