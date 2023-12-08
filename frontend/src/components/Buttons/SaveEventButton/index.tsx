@@ -1,14 +1,10 @@
 import React, {useState} from 'react';
-import {useNavigate} from "react-router-dom";
-import {SaveButtonStateType, SaveEventButtonType} from "../../../resources/types";
+import {useNavigate} from 'react-router-dom';
+import {SaveButtonStateType, SaveEventButtonType} from '../../../resources/types';
 
 export default function SaveEventButton({isInvalid, handleSaveButton}: Readonly<SaveEventButtonType>): JSX.Element {
     const [saveButtonState, setSaveButtonState] = useState<SaveButtonStateType>('idle');
     const navigate = useNavigate();
-
-    const isSaveButtonIdle: boolean = saveButtonState === 'idle';
-    const isSaveButtonSaving: boolean = saveButtonState === 'saving';
-    const isSaveButtonSaved: boolean = saveButtonState === 'saved';
 
     const handleClick = async (e: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
         e.preventDefault();
@@ -19,7 +15,7 @@ export default function SaveEventButton({isInvalid, handleSaveButton}: Readonly<
                 setSaveButtonState('saved');
                 setTimeout((): void => {
                     setSaveButtonState('idle');
-                    navigate("/");
+                    navigate('/');
                 }, 1500);
             }, 1500);
         } catch (error) {
@@ -28,18 +24,17 @@ export default function SaveEventButton({isInvalid, handleSaveButton}: Readonly<
         }
     };
 
-    const buttonClassNames: string = `save-event-button ${isInvalid || !isSaveButtonIdle ? 'disabled' : ''} ${isSaveButtonSaving ? 'saving' : isSaveButtonSaved ? 'saved' : ''}`;
+    const buttonClassNames: string = `save-event-button ${isInvalid || saveButtonState !== 'idle' ? 'disabled' : ''} ${saveButtonState}`;
 
     return (
         <button
             type="submit"
             onClick={handleClick}
             className={buttonClassNames}
-            style={{width: '100%'}}
-            disabled={isInvalid || isSaveButtonSaving}
-            aria-busy={isSaveButtonSaving}
+            disabled={isInvalid || saveButtonState === 'saving'}
+            aria-busy={saveButtonState === 'saving'}
         >
-            {isSaveButtonSaving ? 'Saving' : isSaveButtonSaved ? 'Saved' : 'Save Event'}
+            {saveButtonState === 'saving' ? 'Saving' : saveButtonState === 'saved' ? 'Saved' : 'Save Event'}
         </button>
     );
 }

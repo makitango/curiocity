@@ -6,10 +6,6 @@ export default function DeleteEventButton({handleDeleteButton}: Readonly<DeleteE
     const [deleteButtonState, setDeleteButtonState] = useState<DeleteButtonStateType>('idle');
     const navigate = useNavigate();
 
-    const isDeleteButtonIdle: boolean = deleteButtonState === 'idle';
-    const isDeleteButtonDeleting: boolean = deleteButtonState === 'deleting';
-    const isDeleteButtonDeleted: boolean = deleteButtonState === 'deleted';
-
     const handleClick = async (): Promise<void> => {
         setDeleteButtonState('deleting');
         try {
@@ -27,9 +23,7 @@ export default function DeleteEventButton({handleDeleteButton}: Readonly<DeleteE
         }
     };
 
-    const buttonClassNames: string = `secondary ${!isDeleteButtonIdle ? 'disabled' : ''} ${
-        isDeleteButtonDeleting ? 'deleting' : isDeleteButtonDeleted ? 'deleted' : ''
-    }`;
+    const buttonClassNames = `secondary ${deleteButtonState}`;
 
     return (
         <button
@@ -37,10 +31,10 @@ export default function DeleteEventButton({handleDeleteButton}: Readonly<DeleteE
             onClick={handleClick}
             className={buttonClassNames}
             style={{width: '100%'}}
-            disabled={!isDeleteButtonIdle}
-            aria-busy={isDeleteButtonDeleting}
+            disabled={deleteButtonState !== 'idle'}
+            aria-busy={deleteButtonState === 'deleting'}
         >
-            {isDeleteButtonDeleting ? 'Deleting' : isDeleteButtonDeleted ? 'Deleted' : 'Delete Event'}
+            {deleteButtonState === 'deleting' ? 'Deleting' : deleteButtonState === 'deleted' ? 'Deleted' : 'Delete Event'}
         </button>
     );
 }
