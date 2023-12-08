@@ -38,7 +38,7 @@ export type EventFormInputType = {
     placeholder?: string;
 };
 
-export type EventFormProps = {
+export type EventFormType = {
     formData: {
         name: string;
         location: string;
@@ -52,3 +52,7 @@ export type EventFormProps = {
     handleSubmit: () => Promise<void>;
     handleDelete?: () => void;
 };
+
+export type SaveButtonStateType = 'idle' | 'saving' | 'saved';
+export type DeleteButtonStateType = 'idle' | 'deleting' | 'deleted';
+
