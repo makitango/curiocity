@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import {ChangeEvent, FormEvent, useState} from 'react';
 import axios from 'axios';
 import EventForm from '../../components/EventForm';
 import './index.css';
@@ -17,8 +17,8 @@ export default function AddEvent(): JSX.Element {
     const [formData, setFormData] = useState(initialFormData);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({ ...prevData, [name]: value }));
+        const {name, value} = e.target;
+        setFormData((prevData) => ({...prevData, [name]: value}));
     };
 
     const isValid: boolean = Object.values(formData).every(
@@ -41,12 +41,10 @@ export default function AddEvent(): JSX.Element {
 
     return (
         <>
-            <article className="detail-view">
-                <h1>Add Event</h1>
-                <form onSubmit={handleSubmit}>
-                    <EventForm formData={formData} isValid={isValid} handleChange={handleChange} handleSubmit={handleSubmit} />
-                </form>
-            </article>
+            <form onSubmit={handleSubmit}>
+                <EventForm formData={formData} isValid={isValid} handleChange={handleChange}
+                           handleSubmit={handleSubmit}/>
+            </form>
         </>
     );
 }

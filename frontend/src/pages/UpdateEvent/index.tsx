@@ -1,11 +1,11 @@
-import { ChangeEvent, FormEvent, useState, useEffect } from 'react';
+import {ChangeEvent, FormEvent, useState, useEffect} from 'react';
 import axios from 'axios';
 import EventForm from '../../components/EventForm';
 import './index.css';
 import {useParams} from "react-router-dom";
 
 export default function UpdateEvent(): JSX.Element {
-    const { eventId } = useParams<{ eventId: string }>();
+    const {eventId} = useParams<{ eventId: string }>();
 
     const initialFormData = {
         name: '',
@@ -32,8 +32,8 @@ export default function UpdateEvent(): JSX.Element {
     }, [eventId]);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({ ...prevData, [name]: value }));
+        const {name, value} = e.target;
+        setFormData((prevData) => ({...prevData, [name]: value}));
     };
 
     const isValid: boolean = Object.values(formData).every(
@@ -64,12 +64,10 @@ export default function UpdateEvent(): JSX.Element {
 
     return (
         <>
-            <article className="detail-view">
-                <h1>Update Event</h1>
-                <form onSubmit={handleSubmit}>
-                    <EventForm formData={formData} isValid={isValid} handleChange={handleChange} handleSubmit={handleSubmit} handleDelete={handleDelete} />
-                </form>
-            </article>
+            <form onSubmit={handleSubmit}>
+                <EventForm formData={formData} isValid={isValid} handleChange={handleChange} handleSubmit={handleSubmit}
+                           handleDelete={handleDelete}/>
+            </form>
         </>
     );
 }

@@ -14,7 +14,7 @@ export default function EventForm({
     const [deleteButtonState, setDeleteButtonState] = useState<DeleteButtonStateType>('idle');
     const navigate = useNavigate();
 
-    useEffect((): void => {
+    useEffect(() => {
         const hasInvalidField: boolean = Object.values(formData).some(
             (value) => typeof value === 'string' && (value.trim() === '' || value.length < 3)
         );
@@ -26,18 +26,17 @@ export default function EventForm({
         setSaveButtonState('saving');
 
         try {
-            if (handleSubmit){
-            await handleSubmit(e);
+            if (handleSubmit) {
+                await handleSubmit(e);
 
-            setTimeout((): void => {
-                setSaveButtonState('saved');
-                setTimeout((): void => {
-                    setSaveButtonState('idle');
-                    navigate('/');
+                setTimeout(() => {
+                    setSaveButtonState('saved');
+                    setTimeout(() => {
+                        setSaveButtonState('idle');
+                        navigate('/');
+                    }, 1500);
                 }, 1500);
-            }, 1500);
-            }
-            else{
+            } else {
                 console.error('handleSubmit is not defined');
                 setSaveButtonState('idle');
             }
@@ -52,9 +51,9 @@ export default function EventForm({
         try {
             if (handleDelete) {
                 await handleDelete();
-                setTimeout((): void => {
+                setTimeout(() => {
                     setDeleteButtonState('deleted');
-                    setTimeout((): void => {
+                    setTimeout(() => {
                         setDeleteButtonState('idle');
                         navigate('/');
                     }, 1500);
@@ -70,61 +69,59 @@ export default function EventForm({
     };
 
     return (
-        <>
-            <EventFormInput label="Name" name="name" value={formData.name} onChange={handleChange} required/>
-            <EventFormInput
-                label="Location"
-                name="location"
-                value={formData.location}
-                onChange={handleChange}
-                required
-            />
-            <EventFormInput label="Date" name="date" type="date" value={formData.date} onChange={handleChange}
-                            required/>
-            <EventFormInput label="Time" name="time" type="time" value={formData.time} onChange={handleChange}
-                            required/>
-            <EventFormInput label="Link" name="link" value={formData.link} onChange={handleChange} required/>
+        <article className="detail-view">
+            <h1>{formData.id ? 'Update Event' : 'Add Event'}</h1>
+            <>
+                <EventFormInput label="Name" name="name" value={formData.name} onChange={handleChange} required/>
+                <EventFormInput label="Location" name="location" value={formData.location} onChange={handleChange}
+                                required/>
+                <EventFormInput label="Date" name="date" type="date" value={formData.date} onChange={handleChange}
+                                required/>
+                <EventFormInput label="Time" name="time" type="time" value={formData.time} onChange={handleChange}
+                                required/>
+                <EventFormInput label="Link" name="link" value={formData.link} onChange={handleChange} required/>
 
-            {formData.id && (formData.usersWhoUpvoted || formData.usersWhoDownvoted) && (
-                <>
-                    <p>Upvotes: {formData.usersWhoUpvoted?.length}</p>
-                    <p>Downvotes: {formData.usersWhoDownvoted?.length}</p>
-                </>
-            )}
+                {formData.id && (formData.usersWhoUpvoted || formData.usersWhoDownvoted) && (
+                    <>
+                        <p>Upvotes: {formData.usersWhoUpvoted?.length}</p>
+                        <p>Downvotes: {formData.usersWhoDownvoted?.length}</p>
+                    </>
+                )}
 
-            <button
-                type="submit"
-                onClick={handleSaveButton}
-                className={`save-event-button ${isInvalid || saveButtonState === 'saving' ? 'disabled' : ''} ${
-                    saveButtonState === 'saved' ? 'saved' : ''
-                }`}
-                style={{width: '100%'}}
-                disabled={isInvalid || saveButtonState === 'saving' || saveButtonState === 'saved'}
-                aria-busy={saveButtonState === 'saving'}
-            >
-                {saveButtonState === 'saving' ? 'Saving' : saveButtonState === 'saved' ? 'Saved' : 'Save Event'}
-            </button>
-
-            {formData.id && (
                 <button
-                    type="button"
-                    onClick={handleDeleteButton}
-                    className={`delete-event-button ${deleteButtonState !== 'idle' ? 'disabled' : ''} ${
-                        deleteButtonState === 'deleting' ? 'deleting' : deleteButtonState === 'deleted' ? 'deleted' : ''
+                    type="submit"
+                    onClick={handleSaveButton}
+                    className={`save-event-button ${isInvalid || saveButtonState === 'saving' ? 'disabled' : ''} ${
+                        saveButtonState === 'saved' ? 'saved' : ''
                     }`}
-                    style={{ width: '100%' }}
-                    disabled={deleteButtonState !== 'idle'}
-                    aria-busy={deleteButtonState === 'deleting'}
+                    style={{width: '100%'}}
+                    disabled={isInvalid || saveButtonState === 'saving' || saveButtonState === 'saved'}
+                    aria-busy={saveButtonState === 'saving'}
                 >
-                    {deleteButtonState === 'deleting' ? 'Deleting...' : deleteButtonState === 'deleted' ? 'Deleted' : 'Delete Event'}
+                    {saveButtonState === 'saving' ? 'Saving' : saveButtonState === 'saved' ? 'Saved' : 'Save Event'}
                 </button>
-            )}
 
-            <Link to="/" style={{textDecoration: 'none', width: '100%'}}>
-                <button type="button" className="outline secondary" style={{width: '100%'}}>
-                    Cancel
-                </button>
-            </Link>
-        </>
+                {formData.id && (
+                    <button
+                        type="button"
+                        onClick={handleDeleteButton}
+                        className={`delete-event-button ${deleteButtonState !== 'idle' ? 'disabled' : ''} ${
+                            deleteButtonState === 'deleting' ? 'deleting' : deleteButtonState === 'deleted' ? 'deleted' : ''
+                        }`}
+                        style={{width: '100%'}}
+                        disabled={deleteButtonState !== 'idle'}
+                        aria-busy={deleteButtonState === 'deleting'}
+                    >
+                        {deleteButtonState === 'deleting' ? 'Deleting...' : deleteButtonState === 'deleted' ? 'Deleted' : 'Delete Event'}
+                    </button>
+                )}
+
+                <Link to="/" style={{textDecoration: 'none', width: '100%'}}>
+                    <button type="button" className="outline secondary" style={{width: '100%'}}>
+                        Cancel
+                    </button>
+                </Link>
+            </>
+        </article>
     );
 }
