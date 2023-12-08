@@ -10,7 +10,7 @@ export default function EventForm({
                                       onChange,
                                       handleDelete,
                                       handleSubmit,
-                                  }: EventFormType): JSX.Element {
+                                  }: Readonly<EventFormType>): JSX.Element {
     const [isInvalid, setIsInvalid] = useState<boolean>(false);
 
     useEffect(() => {

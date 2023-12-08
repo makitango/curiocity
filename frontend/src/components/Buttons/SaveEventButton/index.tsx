@@ -4,7 +4,7 @@ import {SaveButtonStateType, SaveEventButtonType} from "../../../resources/types
 
 
 
-export default function SaveEventButton({ isInvalid, handleSaveButton }: SaveEventButtonType): JSX.Element {
+export default function SaveEventButton({ isInvalid, handleSaveButton }: Readonly<SaveEventButtonType>): JSX.Element {
     const [saveButtonState, setSaveButtonState] = useState<SaveButtonStateType>('idle');
     const navigate = useNavigate();
 

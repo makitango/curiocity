@@ -2,7 +2,7 @@ import { useState } from 'react';
 import {DeleteButtonStateType, DeleteEventButtonType} from "../../../resources/types.tsx";
 import {useNavigate} from "react-router-dom";
 
-export default function DeleteEventButton({ handleDeleteButton }: DeleteEventButtonType): JSX.Element {
+export default function DeleteEventButton({ handleDeleteButton }: Readonly<DeleteEventButtonType>): JSX.Element {
     const [deleteButtonState, setDeleteButtonState] = useState<DeleteButtonStateType>('idle');
     const navigate = useNavigate();
 
