@@ -71,7 +71,6 @@ export default function EventForm({
     return (
         <article className="detail-view">
             <h1>{formData.id ? 'Update Event' : 'Add Event'}</h1>
-            <>
                 <EventFormInput label="Name" name="name" value={formData.name} onChange={onChange} required/>
                 <EventFormInput label="Location" name="location" value={formData.location} onChange={onChange}
                                 required/>
@@ -121,7 +120,6 @@ export default function EventForm({
                         Cancel
                     </button>
                 </Link>
-            </>
         </article>
     );
 }
