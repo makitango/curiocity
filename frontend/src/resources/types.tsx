@@ -1,4 +1,4 @@
-import {ChangeEvent, FormEvent} from 'react';
+import React, {ChangeEvent, FormEvent} from 'react';
 
 export type EventType = {
     id: string;
@@ -40,3 +40,11 @@ export type EventFormType = {
 export type SaveButtonStateType = 'idle' | 'saving' | 'saved';
 export type DeleteButtonStateType = 'idle' | 'deleting' | 'deleted';
 
+export type SaveEventButtonType = {
+    isInvalid: boolean;
+    handleSaveButton: (e: React.MouseEvent<HTMLButtonElement>) => Promise<void>;
+};
+
+export type DeleteEventButtonType = {
+    handleDeleteButton: () => Promise<void>;
+};
