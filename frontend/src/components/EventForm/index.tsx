@@ -5,7 +5,7 @@ import {DeleteButtonStateType, EventFormType, SaveButtonStateType} from '../../r
 
 export default function EventForm({
                                       formData,
-                                      handleChange,
+                                      onChange,
                                       handleSubmit,
                                       handleDelete,
                                   }: EventFormType): JSX.Element {
@@ -14,7 +14,7 @@ export default function EventForm({
     const [deleteButtonState, setDeleteButtonState] = useState<DeleteButtonStateType>('idle');
     const navigate = useNavigate();
 
-    useEffect(() => {
+    useEffect((): void => {
         const hasInvalidField: boolean = Object.values(formData).some(
             (value) => typeof value === 'string' && (value.trim() === '' || value.length < 3)
         );
@@ -29,9 +29,9 @@ export default function EventForm({
             if (handleSubmit) {
                 await handleSubmit(e);
 
-                setTimeout(() => {
+                setTimeout((): void => {
                     setSaveButtonState('saved');
-                    setTimeout(() => {
+                    setTimeout((): void => {
                         setSaveButtonState('idle');
                         navigate('/');
                     }, 1500);
@@ -51,9 +51,9 @@ export default function EventForm({
         try {
             if (handleDelete) {
                 await handleDelete();
-                setTimeout(() => {
+                setTimeout((): void => {
                     setDeleteButtonState('deleted');
-                    setTimeout(() => {
+                    setTimeout((): void => {
                         setDeleteButtonState('idle');
                         navigate('/');
                     }, 1500);
@@ -72,14 +72,14 @@ export default function EventForm({
         <article className="detail-view">
             <h1>{formData.id ? 'Update Event' : 'Add Event'}</h1>
             <>
-                <EventFormInput label="Name" name="name" value={formData.name} onChange={handleChange} required/>
-                <EventFormInput label="Location" name="location" value={formData.location} onChange={handleChange}
+                <EventFormInput label="Name" name="name" value={formData.name} onChange={onChange} required/>
+                <EventFormInput label="Location" name="location" value={formData.location} onChange={onChange}
                                 required/>
-                <EventFormInput label="Date" name="date" type="date" value={formData.date} onChange={handleChange}
+                <EventFormInput label="Date" name="date" type="date" value={formData.date} onChange={onChange}
                                 required/>
-                <EventFormInput label="Time" name="time" type="time" value={formData.time} onChange={handleChange}
+                <EventFormInput label="Time" name="time" type="time" value={formData.time} onChange={onChange}
                                 required/>
-                <EventFormInput label="Link" name="link" value={formData.link} onChange={handleChange} required/>
+                <EventFormInput label="Link" name="link" value={formData.link} onChange={onChange} required/>
 
                 {formData.id && (formData.usersWhoUpvoted || formData.usersWhoDownvoted) && (
                     <>

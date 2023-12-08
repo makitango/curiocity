@@ -11,23 +11,6 @@ export type EventType = {
     usersWhoDownvoted: string[];
 };
 
-export type EventListType = {
-    events: EventType[];
-};
-
-export type AddEventType = {
-    name: string;
-    location: string;
-    date: string;
-    time: string;
-    link: string;
-};
-
-export type UpdateEventType = AddEventType & {
-    usersWhoUpvoted: string[];
-    usersWhoDownvoted: string[];
-};
-
 export type EventFormInputType = {
     label: string;
     name: string;
@@ -48,7 +31,7 @@ export type EventFormType = {
         usersWhoUpvoted?: string[];
         usersWhoDownvoted?: string[];
     };
-    handleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: () => Promise<void>;
     handleDelete?: () => void;
 };
