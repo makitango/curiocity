@@ -53,12 +53,21 @@ export default function UpdateEvent(): JSX.Element {
             });
     };
 
+    const handleDelete = async (): Promise<void> => {
+        try {
+            await axios.delete(`/api/events/${eventId}`);
+
+        } catch (error) {
+            console.error('Error during delete:', error);
+        }
+    };
+
     return (
         <>
             <article className="detail-view">
                 <h1>Update Event</h1>
                 <form onSubmit={handleSubmit}>
-                    <EventForm formData={formData} isValid={isValid} handleChange={handleChange} handleSubmit={handleSubmit} />
+                    <EventForm formData={formData} isValid={isValid} handleChange={handleChange} handleSubmit={handleSubmit} handleDelete={handleDelete} />
                 </form>
             </article>
         </>
