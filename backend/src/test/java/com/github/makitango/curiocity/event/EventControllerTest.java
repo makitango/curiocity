@@ -3,7 +3,9 @@ package com.github.makitango.curiocity.event;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import com.github.makitango.curiocity.event.exceptions.EventNotFoundException;
+import com.github.makitango.curiocity.event.models.Event;
+import com.github.makitango.curiocity.event.models.EventDTO;
+import com.github.makitango.curiocity.event.repositories.EventRepository;
 import org.springframework.http.MediaType;
 
 import static org.junit.jupiter.api.Assertions.*;

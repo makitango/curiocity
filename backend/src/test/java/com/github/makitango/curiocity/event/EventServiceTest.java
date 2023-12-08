@@ -1,5 +1,9 @@
 package com.github.makitango.curiocity.event;
 
+import com.github.makitango.curiocity.event.models.Event;
+import com.github.makitango.curiocity.event.models.EventDTO;
+import com.github.makitango.curiocity.event.repositories.EventRepository;
+import com.github.makitango.curiocity.event.services.EventService;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

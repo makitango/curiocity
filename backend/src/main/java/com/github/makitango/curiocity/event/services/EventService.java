@@ -1,6 +1,9 @@
-package com.github.makitango.curiocity.event;
+package com.github.makitango.curiocity.event.services;
 
 import com.github.makitango.curiocity.event.exceptions.EventNotFoundException;
+import com.github.makitango.curiocity.event.models.Event;
+import com.github.makitango.curiocity.event.models.EventDTO;
+import com.github.makitango.curiocity.event.repositories.EventRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

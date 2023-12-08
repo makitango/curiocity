@@ -1,5 +1,8 @@
-package com.github.makitango.curiocity.event;
+package com.github.makitango.curiocity.event.controllers;
 
+import com.github.makitango.curiocity.event.services.EventService;
+import com.github.makitango.curiocity.event.models.Event;
+import com.github.makitango.curiocity.event.models.EventDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
