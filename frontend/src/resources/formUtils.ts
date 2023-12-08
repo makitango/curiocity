@@ -14,6 +14,7 @@ export function useForm(initialFormData: {
     usersWhoDownvoted: [],
 }) {
     const [formData, setFormData] = useState(initialFormData);
+    const [invalid, setInvalid] = useState<boolean>(false);
 
     function handleChange(e: ChangeEvent<HTMLInputElement>): void {
         const { name, value } = e.target;
@@ -54,5 +55,5 @@ export function useForm(initialFormData: {
         setFormData(initialFormData);
     }
 
-    return { formData, handleChange, isValid, handleSubmit, setFormData, resetForm };
+    return { formData, handleChange, isValid, handleSubmit, setFormData, resetForm, invalid };
 }

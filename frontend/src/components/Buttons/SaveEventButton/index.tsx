@@ -1,24 +1,23 @@
-import React, { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+import React, {useState} from 'react';
+import {useNavigate} from "react-router-dom";
 import {SaveButtonStateType, SaveEventButtonType} from "../../../resources/types";
 
-
-
-export default function SaveEventButton({ isInvalid, handleSaveButton }: Readonly<SaveEventButtonType>): JSX.Element {
+export default function SaveEventButton({isInvalid, handleSaveButton}: Readonly<SaveEventButtonType>): JSX.Element {
     const [saveButtonState, setSaveButtonState] = useState<SaveButtonStateType>('idle');
     const navigate = useNavigate();
 
+    const isSaveButtonIdle: boolean = saveButtonState === 'idle';
+    const isSaveButtonSaving: boolean = saveButtonState === 'saving';
+    const isSaveButtonSaved: boolean = saveButtonState === 'saved';
+
     const handleClick = async (e: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
-        e.preventDefault(); // Prevent the default form submission behavior
-
+        e.preventDefault();
         setSaveButtonState('saving');
-
         try {
             await handleSaveButton(e);
-
-            setTimeout(() => {
+            setTimeout((): void => {
                 setSaveButtonState('saved');
-                setTimeout(() => {
+                setTimeout((): void => {
                     setSaveButtonState('idle');
                     navigate("/");
                 }, 1500);
@@ -33,14 +32,14 @@ export default function SaveEventButton({ isInvalid, handleSaveButton }: Readonl
         <button
             type="submit"
             onClick={handleClick}
-            className={`save-event-button ${isInvalid || saveButtonState === 'saving' ? 'disabled' : ''} ${
-                saveButtonState === 'saved' ? 'saved' : ''
-            }`}
-            style={{ width: '100%' }}
-            disabled={isInvalid || saveButtonState === 'saving' || saveButtonState === 'saved'}
-            aria-busy={saveButtonState === 'saving'}
+            className={`save-event-button ${
+                isInvalid || !isSaveButtonIdle ? 'disabled' : ''
+            } ${isSaveButtonSaving ? 'saving' : isSaveButtonSaved ? 'saved' : ''}`}
+            style={{width: '100%'}}
+            disabled={isInvalid || isSaveButtonSaving}
+            aria-busy={isSaveButtonSaving}
         >
-            {saveButtonState === 'saving' ? 'Saving' : saveButtonState === 'saved' ? 'Saved' : 'Save Event'}
+            {isSaveButtonSaving ? 'Saving' : isSaveButtonSaved ? 'Saved' : 'Save Event'}
         </button>
     );
 }

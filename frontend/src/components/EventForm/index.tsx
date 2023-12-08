@@ -13,7 +13,7 @@ export default function EventForm({
                                   }: Readonly<EventFormType>): JSX.Element {
     const [isInvalid, setIsInvalid] = useState<boolean>(false);
 
-    useEffect(() => {
+    useEffect((): void => {
         const hasInvalidField: boolean = Object.values(formData).some(
             (value) => typeof value === 'string' && (value.trim() === '' || value.length < 3)
         );
