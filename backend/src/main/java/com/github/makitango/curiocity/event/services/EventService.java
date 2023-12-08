@@ -57,10 +57,10 @@ public class EventService {
         return eventRepository.save(updatedEvent);
     }
 
-    public Event deleteEvent(String eventId) {
-        Event event =
-                eventRepository.findById(eventId).orElseThrow(EventNotFoundException::new);
+    public void deleteEvent(String eventId) {
+        if (eventRepository.findById(eventId).isEmpty()) {
+            throw new EventNotFoundException();
+        }
         eventRepository.deleteById(eventId);
-        return event;
     }
 }
