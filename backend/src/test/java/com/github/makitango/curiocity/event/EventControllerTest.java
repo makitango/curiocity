@@ -211,5 +211,4 @@ class EventControllerTest {
         mockMvc.perform(delete(BASE_URI + "/" + nonExistingEventId))
                 .andExpect(status().isNotFound());
     }
-
 }

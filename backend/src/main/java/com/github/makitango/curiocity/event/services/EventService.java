@@ -58,8 +58,9 @@ public class EventService {
     }
 
     public Event deleteEvent(String eventId) {
-        eventRepository.findById(eventId).orElseThrow(EventNotFoundException::new);
+        Event event =
+                eventRepository.findById(eventId).orElseThrow(EventNotFoundException::new);
         eventRepository.deleteById(eventId);
-        return null;
+        return event;
     }
 }
