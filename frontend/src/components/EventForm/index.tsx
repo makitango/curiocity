@@ -1,21 +1,24 @@
-import { ChangeEvent, useState, useEffect, FormEvent } from 'react';
+import {ChangeEvent, useState, useEffect, FormEvent} from 'react';
 import EventFormInput from '../EventFormInput';
-import { Link } from 'react-router-dom';
-import { EventFormProps } from '../../resources/types.tsx';
+import {Link, useNavigate, useParams} from 'react-router-dom';
+import {EventFormProps} from '../../resources/types.tsx';
+import axios from "axios";
 
 export default function EventForm({
                                       formData,
                                       handleChange,
                                       handleSubmit,
-                                      handleDelete,
                                   }: EventFormProps): JSX.Element {
     const [isInvalid, setIsInvalid] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSaved, setIsSaved] = useState<boolean>(false);
     const [deleteButtonState, setDeleteButtonState] = useState<'idle' | 'deleting' | 'deleted'>('idle');
+    const navigate = useNavigate();
+    const {eventId} = useParams<{ eventId: string }>();
 
-    useEffect(() => {
-        const hasInvalidField = Object.values(formData).some(
+
+    useEffect((): void => {
+        const hasInvalidField: boolean = Object.values(formData).some(
             (value) => typeof value === 'string' && (value.trim() === '' || value.length < 3)
         );
         setIsInvalid(hasInvalidField);
@@ -28,14 +31,12 @@ export default function EventForm({
         try {
             await handleSubmit(e);
 
-            setTimeout(() => {
+            setTimeout((): void => {
                 setIsSaved(true);
                 setIsLoading(false);
-                setTimeout(() => {
-                    setIsSaved(false); // Reset isSaved after navigating
-
-                    // Navigate to the main page ("/")
-                    window.location.href = '/';
+                setTimeout((): void => {
+                    setIsSaved(false);
+                    navigate("/")
                 }, 1500);
             }, 1500);
         } catch (error) {
@@ -44,20 +45,18 @@ export default function EventForm({
         }
     };
 
-    const handleDeleteEvent = async () => {
+    const handleDelete = async () => {
         setDeleteButtonState('deleting');
-
         try {
-            if (handleDelete) {
-                await handleDelete();
-            }
+            await axios.delete(`/api/events/${eventId}`)
 
             setDeleteButtonState('deleted');
-            setTimeout(() => {
+            setTimeout((): void => {
                 setDeleteButtonState('idle');
-                window.location.href = '/'; // Redirect to the main page
+                navigate("/")
             }, 1500);
-        } catch (error) {
+        } catch
+            (error) {
             console.error('Error during delete:', error);
             setDeleteButtonState('idle');
         }
@@ -65,11 +64,14 @@ export default function EventForm({
 
     return (
         <>
-            <EventFormInput label="Name" name="name" value={formData.name} onChange={handleChange} required />
-            <EventFormInput label="Location" name="location" value={formData.location} onChange={handleChange} required />
-            <EventFormInput label="Date" name="date" type="date" value={formData.date} onChange={handleChange} required />
-            <EventFormInput label="Time" name="time" type="time" value={formData.time} onChange={handleChange} required />
-            <EventFormInput label="Link" name="link" value={formData.link} onChange={handleChange} required />
+            <EventFormInput label="Name" name="name" value={formData.name} onChange={handleChange} required/>
+            <EventFormInput label="Location" name="location" value={formData.location} onChange={handleChange}
+                            required/>
+            <EventFormInput label="Date" name="date" type="date" value={formData.date} onChange={handleChange}
+                            required/>
+            <EventFormInput label="Time" name="time" type="time" value={formData.time} onChange={handleChange}
+                            required/>
+            <EventFormInput label="Link" name="link" value={formData.link} onChange={handleChange} required/>
 
             {formData.id && (formData.usersWhoUpvoted || formData.usersWhoDownvoted) && (
                 <>
@@ -82,7 +84,7 @@ export default function EventForm({
                 type="submit"
                 onClick={handleSave}
                 className={`save-event-button ${isInvalid || isLoading ? 'disabled' : ''} ${isSaved ? 'saved' : ''}`}
-                style={{ width: '100%' }}
+                style={{width: '100%'}}
                 disabled={isInvalid || isLoading || isSaved}
                 aria-busy={isLoading}
             >
@@ -91,18 +93,18 @@ export default function EventForm({
 
             <button
                 type="button"
-                onClick={handleDeleteEvent}
+                onClick={handleDelete}
                 className={`delete-event-button ${deleteButtonState !== 'idle' ? 'disabled' : ''} ${
                     deleteButtonState === 'deleting' ? 'deleting' : deleteButtonState === 'deleted' ? 'deleted' : ''
                 }`}
-                style={{ width: '100%' }}
+                style={{width: '100%'}}
                 disabled={deleteButtonState !== 'idle'}
             >
                 {deleteButtonState === 'deleting' ? 'Deleting...' : deleteButtonState === 'deleted' ? 'Deleted' : 'Delete Event'}
             </button>
 
-            <Link to="/" style={{ textDecoration: 'none', width: '100%' }}>
-                <button type="button" className="outline secondary" style={{ width: '100%' }}>
+            <Link to="/" style={{textDecoration: 'none', width: '100%'}}>
+                <button type="button" className="outline secondary" style={{width: '100%'}}>
                     Cancel
                 </button>
             </Link>
