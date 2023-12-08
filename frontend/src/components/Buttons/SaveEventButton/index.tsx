@@ -28,13 +28,13 @@ export default function SaveEventButton({isInvalid, handleSaveButton}: Readonly<
         }
     };
 
+    const buttonClassNames: string = `save-event-button ${isInvalid || !isSaveButtonIdle ? 'disabled' : ''} ${isSaveButtonSaving ? 'saving' : isSaveButtonSaved ? 'saved' : ''}`;
+
     return (
         <button
             type="submit"
             onClick={handleClick}
-            className={`save-event-button ${
-                isInvalid || !isSaveButtonIdle ? 'disabled' : ''
-            } ${isSaveButtonSaving ? 'saving' : isSaveButtonSaved ? 'saved' : ''}`}
+            className={buttonClassNames}
             style={{width: '100%'}}
             disabled={isInvalid || isSaveButtonSaving}
             aria-busy={isSaveButtonSaving}

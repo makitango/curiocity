@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { DeleteButtonStateType, DeleteEventButtonType } from "../../../resources/types.tsx";
-import { useNavigate } from "react-router-dom";
+import {useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import {DeleteButtonStateType, DeleteEventButtonType} from '../../../resources/types.tsx';
 
-export default function DeleteEventButton({ handleDeleteButton }: Readonly<DeleteEventButtonType>): JSX.Element {
+export default function DeleteEventButton({handleDeleteButton}: Readonly<DeleteEventButtonType>): JSX.Element {
     const [deleteButtonState, setDeleteButtonState] = useState<DeleteButtonStateType>('idle');
     const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ export default function DeleteEventButton({ handleDeleteButton }: Readonly<Delet
                 setDeleteButtonState('deleted');
                 setTimeout((): void => {
                     setDeleteButtonState('idle');
-                    navigate("/")
+                    navigate('/');
                 }, 1500);
             }, 1500);
         } catch (error) {
@@ -27,14 +27,16 @@ export default function DeleteEventButton({ handleDeleteButton }: Readonly<Delet
         }
     };
 
+    const buttonClassNames: string = `secondary ${!isDeleteButtonIdle ? 'disabled' : ''} ${
+        isDeleteButtonDeleting ? 'deleting' : isDeleteButtonDeleted ? 'deleted' : ''
+    }`;
+
     return (
         <button
             type="button"
             onClick={handleClick}
-            className={`secondary ${!isDeleteButtonIdle ? 'disabled' : ''} ${
-                isDeleteButtonDeleting ? 'deleting' : isDeleteButtonDeleted ? 'deleted' : ''
-            }`}
-            style={{ width: '100%' }}
+            className={buttonClassNames}
+            style={{width: '100%'}}
             disabled={!isDeleteButtonIdle}
             aria-busy={isDeleteButtonDeleting}
         >
