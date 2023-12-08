@@ -2,7 +2,7 @@ import { FormEvent } from 'react';
 import axios from 'axios';
 import EventForm from '../../components/EventForm';
 import './index.css';
-import {useForm} from "../../resources/formUtils.ts";
+import { useForm } from '../../resources/formUtils';
 
 export default function AddEvent(): JSX.Element {
     const initialFormData = {

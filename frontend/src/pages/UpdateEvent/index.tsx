@@ -1,9 +1,10 @@
 import { FormEvent, useEffect } from 'react';
-import axios from 'axios';
-import EventForm from '../../components/EventForm';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+
+import EventForm from '../../components/EventForm';
+import { useForm } from '../../resources/formUtils';
 import './index.css';
-import {useForm} from "../../resources/formUtils.ts";
 
 export default function UpdateEvent(): JSX.Element {
     const { eventId } = useParams<{ eventId: string }>();
@@ -54,6 +55,12 @@ export default function UpdateEvent(): JSX.Element {
     };
 
     return (
-        <EventForm formData={formData} isValid={isValid} handleDelete={handleDelete} handleSubmit={handleSubmit} onChange={handleChange} />
+        <EventForm
+            formData={formData}
+            isValid={isValid}
+            handleDelete={handleDelete}
+            handleSubmit={handleSubmit}
+            onChange={handleChange}
+        />
     );
 }
