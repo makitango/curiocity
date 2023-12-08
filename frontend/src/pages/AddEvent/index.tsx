@@ -40,9 +40,7 @@ export default function AddEvent(): JSX.Element {
     };
 
     return (
-        <>
                 <EventForm formData={formData} isValid={isValid}
                            handleSubmit={handleSubmit} onChange={handleChange}/>
-        </>
     );
 }

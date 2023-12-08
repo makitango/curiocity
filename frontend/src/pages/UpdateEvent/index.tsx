@@ -63,9 +63,7 @@ export default function UpdateEvent(): JSX.Element {
     };
 
     return (
-        <>
                 <EventForm formData={formData} isValid={isValid}
                            handleDelete={handleDelete} handleSubmit={handleSubmit} onChange={handleChange}/>
-        </>
     );
 }
