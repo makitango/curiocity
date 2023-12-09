@@ -1,8 +1,6 @@
 import axios from "axios";
 import { ChangeEvent, FormEvent, useState } from "react";
 
-
-
 export function useForm(initialFormData: {
     id:'',
     name: '',
