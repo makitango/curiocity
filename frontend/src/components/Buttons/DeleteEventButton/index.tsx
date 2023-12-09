@@ -34,7 +34,9 @@ export default function DeleteEventButton({handleDeleteButton}: Readonly<DeleteE
             disabled={deleteButtonState !== 'idle'}
             aria-busy={deleteButtonState === 'deleting'}
         >
-            {deleteButtonState === 'deleting' ? 'Deleting' : deleteButtonState === 'deleted' ? 'Deleted' : 'Delete Event'}
+            {deleteButtonState === 'deleting' && 'Deleting'}
+            {deleteButtonState === 'deleted' && 'Deleted'}
+            {deleteButtonState === 'idle' && 'Delete Event'}
         </button>
     );
 }
