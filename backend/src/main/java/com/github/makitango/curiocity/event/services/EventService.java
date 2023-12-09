@@ -38,7 +38,6 @@ public class EventService {
         return eventRepository.findById(eventId).orElseThrow(EventNotFoundException::new);
     }
 
-
     public Event updateEvent(String id, EventDTO eventDTO) {
 
         Event existingEvent = eventRepository.findById(id)
