@@ -1,5 +1,8 @@
-package com.github.makitango.curiocity.event;
+package com.github.makitango.curiocity.event.controllers;
 
+import com.github.makitango.curiocity.event.services.EventService;
+import com.github.makitango.curiocity.event.models.Event;
+import com.github.makitango.curiocity.event.models.EventDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,5 +32,10 @@ public class EventController {
     @PutMapping("/{id}")
     public Event updateEvent(@PathVariable String id, @RequestBody EventDTO eventDTO) {
         return eventService.updateEvent(id, eventDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteEvent(@PathVariable String id) {
+        eventService.deleteEvent(id);
     }
 }

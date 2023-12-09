@@ -1,25 +1,47 @@
-import { Link } from 'react-router-dom';
-import { EventType, EventListType } from '../../resources/types.tsx';
+import {useEffect, useState} from 'react';
+import axios from 'axios';
+import {Link} from 'react-router-dom';
+import './index.css';
+import {EventType} from '../../resources/types';
 
-export default function EventList({ events }: Readonly<EventListType>): JSX.Element {
+export default function EventList(): JSX.Element {
+    const [events, setEvents] = useState<EventType[]>([]);
+
+    useEffect((): void => {
+        axios
+            .get('/api/events')
+            .then((response): void => {
+                setEvents(response.data as EventType[]);
+            })
+            .catch((error): void => {
+                console.error(error);
+            });
+    }, []);
+
     return (
-        <div>
+        <div className="event-list-container">
             {!events ? (
                 <strong>Events are loading</strong>
             ) : (
-                <ul>
-                    <h2>Event List</h2>
+                <ul className="event-list">
+                    <Link to="add" style={{textDecoration: 'none'}}>
+                        <article className="add-event-item">
+                            <h1>Add Event</h1>
+                        </article>
+                    </Link>
                     {events.map((event: EventType) => (
-                        <li key={event.id}>
-                            <h3>Title: {event.name}</h3>
-                            <p>Location: {event.location}</p>
-                            <p>Date: {event.date}</p>
-                            <p>Time: {event.time}</p>
-                            <p>Link: {event.link}</p>
-                            <p>Upvotes: {event.usersWhoUpvoted.length}</p>
-                            <p>Downvotes: {event.usersWhoDownvoted.length}</p>
-                            <Link to={`/update/${event.id}`}>Update Event</Link>
-                        </li>
+                        <Link to={`/update/${event.id}`} style={{textDecoration: 'none'}} key={event.id}>
+                            <article className="event-item">
+                                <h3>{event.name}</h3>
+                                <p>{event.location}</p>
+                                <p>{event.date}</p>
+                                <p>{event.time}</p>
+                                <footer style={{marginTop: 'auto'}}>
+                                    <p>Upvotes: {event.usersWhoUpvoted.length}</p>
+                                    <p>Downvotes: {event.usersWhoDownvoted.length}</p>
+                                </footer>
+                            </article>
+                        </Link>
                     ))}
                 </ul>
             )}

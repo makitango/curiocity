@@ -1,69 +1,35 @@
-import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import { FormEvent } from 'react';
 import axios from 'axios';
-import { AddEventType } from '../../resources/types.tsx';
-import { Link } from 'react-router-dom';
-import EventFormInput from '../../components/EventFormInput';
+import EventForm from '../../components/EventForm';
+import './index.css';
+import { useForm } from '../../resources/formUtils';
 
 export default function AddEvent(): JSX.Element {
-    const initialFormData: AddEventType = {
+    const initialFormData = {
         name: '',
         location: '',
         date: '',
         time: '',
         link: '',
+        usersWhoUpvoted: [],
+        usersWhoDownvoted: [],
     };
 
-    const [formData, setFormData] = useState<AddEventType>(initialFormData);
-    const [eventCreated, setEventCreated] = useState<boolean>(false);
-
-    const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-        const { name, value } = e.target;
-        setFormData((prevData:AddEventType) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
+    const { formData, handleChange, isValid, resetForm } = useForm(initialFormData);
 
     const handleSubmit = (e: FormEvent): void => {
         e.preventDefault();
 
         axios
             .post('/api/events', formData)
-            .then((response): void => {
+            .then((response) => {
                 console.log('Event added successfully:', response.data);
-                setEventCreated(true);
-                setFormData(initialFormData);
+                resetForm();
             })
-            .catch((error): void => {
+            .catch((error) => {
                 console.error('Error adding event:', error);
             });
     };
 
-    useEffect(() => {
-        let timer: ReturnType<typeof setTimeout>;
-
-        if (eventCreated) {
-            timer = setTimeout((): void => {
-                setEventCreated(false);
-            }, 5000);
-        }
-
-        return () => clearTimeout(timer);
-    }, [eventCreated]);
-
-    return (
-        <>
-            <Link to="/">MainPage</Link>
-            <h1>Add Event</h1>
-            <form onSubmit={handleSubmit}>
-                <EventFormInput label="Name" name="name" value={formData.name} onChange={handleChange} required />
-                <EventFormInput label="Location" name="location" value={formData.location} onChange={handleChange} required />
-                <EventFormInput label="Date" name="date" value={formData.date} onChange={handleChange} required />
-                <EventFormInput label="Time" name="time" value={formData.time} onChange={handleChange} required />
-                <EventFormInput label="Link" name="link" value={formData.link} onChange={handleChange} required />
-                {eventCreated && <p>Event created</p>}
-                <button type="submit">Add Event</button>
-            </form>
-        </>
-    );
+    return <EventForm formData={formData} isValid={isValid} handleSubmit={handleSubmit} onChange={handleChange} />;
 }

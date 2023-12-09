@@ -1,4 +1,4 @@
-package com.github.makitango.curiocity.event;
+package com.github.makitango.curiocity.event.models;
 
 import lombok.Builder;
 

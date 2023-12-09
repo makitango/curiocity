@@ -1,8 +1,13 @@
-package com.github.makitango.curiocity.event;
+package com.github.makitango.curiocity.event.services;
 
+import com.github.makitango.curiocity.event.exceptions.EventNotFoundException;
+import com.github.makitango.curiocity.event.models.Event;
+import com.github.makitango.curiocity.event.models.EventDTO;
+import com.github.makitango.curiocity.event.repositories.EventRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventService {
@@ -29,8 +34,8 @@ public class EventService {
         return eventRepository.save(entityEvent);
     }
 
-    public Event getEventById(String id) {
-        return eventRepository.findById(id).orElseThrow(() -> new RuntimeException("Event not found"));
+    public Event getEventById(String eventId) {
+        return eventRepository.findById(eventId).orElseThrow(EventNotFoundException::new);
     }
 
     public Event updateEvent(String id, EventDTO eventDTO) {
@@ -48,5 +53,12 @@ public class EventService {
                 .link(eventDTO.link())
                 .build();
         return eventRepository.save(updatedEvent);
+    }
+
+    public void deleteEvent(String eventId) {
+        if (eventRepository.findById(eventId).isEmpty()) {
+            throw new EventNotFoundException();
+        }
+        eventRepository.deleteById(eventId);
     }
 }

@@ -3,6 +3,9 @@ package com.github.makitango.curiocity.event;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import com.github.makitango.curiocity.event.models.Event;
+import com.github.makitango.curiocity.event.models.EventDTO;
+import com.github.makitango.curiocity.event.repositories.EventRepository;
 import org.springframework.http.MediaType;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -172,5 +175,40 @@ class EventControllerTest {
                 .andExpect(jsonPath("$.link").value("https://updated-link.com"))
                 .andExpect(jsonPath("$.usersWhoUpvoted", contains("Robb Stark", "Catelyn Stark")))
                 .andExpect(jsonPath("$.usersWhoDownvoted", contains("Walder Frey")));
+    }
+
+    @Test
+    @DirtiesContext
+    void deleteEvent_whenEventExists_thenEventIsDeletedSuccessfully() throws Exception {
+        // GIVEN
+        Event existingEvent = Event.builder()
+                .id("1")
+                .name("Red Wedding")
+                .location("Westeros")
+                .date("BC1000")
+                .time("5:00 PM")
+                .link("https://gameofthrones.fandom.com/wiki/Red_Wedding")
+                .usersWhoUpvoted(List.of("Robb Stark", "Catelyn Stark"))
+                .usersWhoDownvoted(List.of("Walder Frey"))
+                .build();
+
+        eventRepository.save(existingEvent);
+
+        // WHEN / THEN
+        mockMvc.perform(delete(BASE_URI + "/1"))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get(BASE_URI + "/1"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void deleteEvent_whenEventDoesNotExist_thenNotFoundStatusReturned() throws Exception {
+        // GIVEN
+        String nonExistingEventId = "non-existing-id";
+
+        // WHEN / THEN
+        mockMvc.perform(delete(BASE_URI + "/" + nonExistingEventId))
+                .andExpect(status().isNotFound());
     }
 }

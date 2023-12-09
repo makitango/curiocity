@@ -1,0 +1,102 @@
+.event-list-container {
+    margin: 0;
+    padding: 0;
+}
+
+.event-list {
+    display: grid;
+    grid-column-gap: var(--grid-spacing-horizontal);
+    grid-row-gap: 20px;
+    padding: 0 var(--grid-spacing-horizontal);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    align-content: center;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .event-list {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 500px));
+    }
+}
+
+@media (orientation: landscape) and (max-width: 700px){
+    .event-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (orientation: landscape) and (min-width: 667px) and (max-width: 767px){
+    .event-list {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px){
+    .event-list {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 1025px) and (max-width: 1366px){
+    .event-list {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (min-width: 1366px) and (max-width: 1500px){
+    .event-list {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+
+.event-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    height: 100%;
+}
+
+.add-event-item {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.add-event-item h1 {
+    margin: 0;
+}
+
+.add-event-item:hover,
+.add-event-item:hover footer,
+.event-item:hover,
+.event-item:hover footer
+{
+    background-color: var(--del-color);
+    transition: background-color 0.5s;
+}
+
+.event-item:hover p,
+.event-item:hover footer p {
+    color: white;
+    transition: color 0.5s;
+    background-color: initial;
+}
+
+article footer {
+border-top: none !important;
+}
+
+article {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.save-event-button.disabled {
+    opacity: 0.5; /* or any other style to indicate it's disabled */
+    cursor: not-allowed; /* optional: to change the cursor */
+}
