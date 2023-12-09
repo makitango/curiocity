@@ -35,8 +35,7 @@ public class EventService {
     }
 
     public Event getEventById(String eventId) {
-        Optional<Event> eventOptional = eventRepository.findById(eventId);
-        return eventOptional.orElseThrow(EventNotFoundException::new);
+        return eventRepository.findById(eventId).orElseThrow(EventNotFoundException::new);
     }
 
 
