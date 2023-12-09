@@ -46,7 +46,7 @@ export function useForm(initialFormData: {
             }
         }
 
-        setFormData(initialFormData);
+        resetForm();
     }
 
     function resetForm(): void {
