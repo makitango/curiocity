@@ -25,6 +25,6 @@ class EventNotFoundExceptionTest {
         EventNotFoundException exception = new EventNotFoundException();
 
         // THEN
-        assertEquals(EventNotFoundException.DEFAULT_MESSAGE, exception.getMessage());
+        assertEquals("Event not found" , exception.getMessage());
     }
 }
