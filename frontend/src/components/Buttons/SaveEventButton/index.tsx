@@ -34,9 +34,9 @@ export default function SaveEventButton({isInvalid, handleSaveButton}: Readonly<
             disabled={isInvalid || saveButtonState === 'saving'}
             aria-busy={saveButtonState === 'saving'}
         >
-            {saveButtonState === 'saving' && 'Deleting'}
-            {saveButtonState === 'saved' && 'Deleted'}
-            {saveButtonState === 'idle' && 'Delete Event'}
+            {saveButtonState === 'saving' && 'Saving'}
+            {saveButtonState === 'saved' && 'Saved'}
+            {saveButtonState === 'idle' && 'Save Event'}
         </button>
     );
 }
